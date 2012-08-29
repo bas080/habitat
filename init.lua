@@ -15,8 +15,9 @@ end
     --generate("plants:lavender_wild", {"default:dirt_with_grass"}, minp, maxp, -10, 60, 4, 4, {"default:sand",})
 --end)
 
-function generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes)
-    if maxp.y < height_min or minp.y > height_max then
+function generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes, antitat_size, antitat_nodes)
+    
+    if height_min > maxp.y or height_max < minp.y then --stop if min and max height of plant spawning is not generated area
 		return
 	end
 	
@@ -34,26 +35,29 @@ function generate(node, surfaces, minp, maxp, height_min, height_max, spread, ha
 	local x_deviation
 	local z_deviation
 	
-	--apperently nested while loops don't work!
+	local p
+	local n
+	local p_top
+	local n_top
+	
+	--loop and take steps depending on the spread of the plants
 	for x_current = spread/2, width, spread do
 	    for z_current = spread/2, length, spread do
 
 	        x_deviation = math.floor(math.random(spread))-spread/2
 	        z_deviation = math.floor(math.random(spread))-spread/2
 
-	        for y_current = height_max, height_min, -1 do
-	            local p = {x=minp.x+x_current+x_deviation, y=y_current, z=minp.z+z_current+z_deviation}
-	            local n = minetest.env:get_node(p)
+	        for y_current = height_max, height_min, -1 do --loop to look for the node that is not air
+	            p = {x=minp.x+x_current+x_deviation, y=y_current, z=minp.z+z_current+z_deviation}
+	            n = minetest.env:get_node(p)
+	            p_top = {x=p.x, y=p.y+1, z=p.z}
+	            n_top = minetest.env:get_node(p_top)
 	            
-	            local p_top = {x=p.x, y=p.y+1, z=p.z}
-	            local n_top = minetest.env:get_node(p_top)
-	            
-	            if n.name ~= "air" then
+	            if n.name ~= "air" and n_top.name == "air" then
                     if arrayContains(surfaces, n.name) then
-                        if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil then
+                        if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil and minetest.env:find_node_near(p_top, antitat_size, antitat_nodes) == nil  then
                             minetest.env:add_node(p_top, {name=node})
                         end
-                        break
                     end
 	            end
 	        end
