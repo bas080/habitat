@@ -34,10 +34,11 @@ function generate(node, surfaces, minp, maxp, height_min, height_max, spread, ha
   local x_deviation
   local z_deviation
 
-  local p
-  local n
-  local p_top
+  local p = {x=minp.x, y=y_current, z=minp.z}
+  local n = minetest.env:get_node(p).name
   local n_top
+  local p_top
+  
   local loops = 0
   --loop and take steps depending on the spread of the plants
   for x_current = spread/2, width, spread do
@@ -45,12 +46,12 @@ function generate(node, surfaces, minp, maxp, height_min, height_max, spread, ha
       x_deviation = math.floor(math.random(spread))-spread/2
       z_deviation = math.floor(math.random(spread))-spread/2
       for y_current = height_max_min, height_min_max, -1 do --loop to look for the node that is not air
+        n_top = n
         p = {x=minp.x+x_current+x_deviation, y=y_current, z=minp.z+z_current+z_deviation}
-        n = minetest.env:get_node(p)
-        p_top = {x=p.x, y=p.y+1, z=p.z}
-        n_top = minetest.env:get_node(p_top)
-        if n.name ~= "air" and n_top.name == "air" then
-          if arrayContains(surfaces, n.name) then
+        n = minetest.env:get_node(p).name
+        if n ~= "air" and n_top == "air" then
+          if arrayContains(surfaces, n) then
+            p_top = {x=p.x, y=p.y+1, z=p.z}
             if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil and minetest.env:find_node_near(p_top, antitat_size, antitat_nodes) == nil  then
               minetest.env:add_node(p_top, {name=node})
             end
