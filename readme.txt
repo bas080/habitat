@@ -22,7 +22,7 @@ habitat_nodes, antitat_size, antitat_nodes)
 * avoids antitat nodes
 * spread determines how near they spawn next to eachother
 
-Example from plants mod
+Example (from plants mod)
 
 generate("plants:lavender_wild", {"default:dirt_with_grass"}, minp, maxp, -10, 60, 4, 4, {"default:sand",})
 

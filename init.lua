@@ -13,10 +13,10 @@ function habitat:generate(node, surfaces, minp, maxp, height_min, height_max, sp
   
   minetest.register_on_generated(function(minp, maxp, seed)
     
-    print("generating")
+    --print("generating")
     
     if height_min > maxp.y or height_max < minp.y then --stop if min and max height of plant spawning is not generated area
-      print("not in altitude range")
+      --print("not in altitude range")
       return
     end
 
@@ -61,7 +61,7 @@ function habitat:generate(node, surfaces, minp, maxp, height_min, height_max, sp
         end
       end
     end
-    print(loops)
+    --print(loops)
   end)
 end
 print("[Habitat] Loaded!")
