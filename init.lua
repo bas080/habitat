@@ -1,16 +1,19 @@
 habitat = {}
 
-local function arrayContains(array, value)
-  for _,v in pairs(array) do
-    if v == value then
-      return true
-    end
-  end
-  return false
-end
+
 
 function habitat:generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes, antitat_size, antitat_nodes)
   minetest.register_on_generated(function(minp, maxp, seed)
+  
+  local function arrayContains(array, value)
+    for _,v in pairs(array) do
+      if v == value then
+        return true
+      end
+    end
+    return false
+  end
+  
     if height_min > maxp.y or height_max < minp.y then
       return
     end

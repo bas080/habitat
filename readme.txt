@@ -14,8 +14,7 @@ FORUM:          https://github.com/bas080/habitat/zipball/master
 
 Instructions
 
-habitat:generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, 
-habitat_nodes, antitat_size, antitat_nodes)
+habitat:generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes, antitat_size, antitat_nodes)
 
 * height is the altitude between the node spawns
 * spawn near habitat nodes
@@ -24,7 +23,7 @@ habitat_nodes, antitat_size, antitat_nodes)
 
 Example (from plants mod)
 
-generate("plants:lavender_wild", {"default:dirt_with_grass"}, minp, maxp, -10, 60, 4, 4, {"default:sand",})
+habitat:generate("plants:lavender_wild", {"default:dirt_with_grass"}, minp, maxp, -10, 60, 4, 4, {"default:sand",})
 
 TODO
 
@@ -34,6 +33,7 @@ TODO
 Changelog
 
 0.5
+* changed function definition (name)
 * Improved for loop. Less looping and node checking
 
 0.1
