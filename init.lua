@@ -2,21 +2,12 @@ habitat = {}
 
 
 
-function habitat:generate(node, surfaces, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes, antitat_size, antitat_nodes)
+function habitat:generate(node, surface, minp, maxp, height_min, height_max, spread, habitat_size, habitat_nodes, antitat_size, antitat_nodes)
   minetest.register_on_generated(function(minp, maxp, seed)
-  
-  local function arrayContains(array, value)
-    for _,v in pairs(array) do
-      if v == value then
-        return true
-      end
-    end
-    return false
-  end
-  
     if height_min > maxp.y or height_max < minp.y then
       return
     end
+    
     local height_min_max = math.max(height_min,minp.y)
     local height_max_min = math.min(height_max,maxp.y)
     local width   = maxp.x-minp.x
@@ -39,8 +30,7 @@ function habitat:generate(node, surfaces, minp, maxp, height_min, height_max, sp
           n_top = n
           p = {x=minp.x+x_current+x_deviation, y=y_current, z=minp.z+z_current+z_deviation}
           n = minetest.env:get_node(p).name
-          if n ~= "air" and n_top == "air" then
-            if arrayContains(surfaces, n) then
+          if surface == n and n_top == "air" then
               p_top = {x=p.x, y=p.y+1, z=p.z}
               if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil and minetest.env:find_node_near(p_top, antitat_size, antitat_nodes) == nil  then
                 minetest.env:add_node(p_top, {name=node})
