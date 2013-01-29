@@ -27,10 +27,13 @@ habitat:generate("plants:lavender_wild", {"default:dirt_with_grass"}, minp, maxp
 
 TODO
 
-1.0
-* Reduce amount of loops even more (I don't know how yet)
+1.1
+* Make node string argument nodes array that spawns random nodes in array
 
 Changelog
+
+1.0
+* Reduce amount of loops even more by changing surfaces array to surface string
 
 0.5
 * changed function definition (name)

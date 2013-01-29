@@ -22,24 +22,27 @@ function habitat:generate(node, surface, minp, maxp, height_min, height_max, spr
     local n = minetest.env:get_node(p).name
     local n_top
     local p_top
+    print(node)
+    local count = 0
     for x_current = spread/2, width, spread do
       for z_current = spread/2, length, spread do
         x_deviation = math.floor(math.random(spread))-spread/2
         z_deviation = math.floor(math.random(spread))-spread/2
         for y_current = height_max_min, height_min_max, -1 do 
           n_top = n
+          count = count + 1
           p = {x=minp.x+x_current+x_deviation, y=y_current, z=minp.z+z_current+z_deviation}
           n = minetest.env:get_node(p).name
           if surface == n and n_top == "air" then
-              p_top = {x=p.x, y=p.y+1, z=p.z}
-              if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil and minetest.env:find_node_near(p_top, antitat_size, antitat_nodes) == nil  then
-                minetest.env:add_node(p_top, {name=node})
-              end
+            p_top = {x=p.x, y=p.y+1, z=p.z}
+            if minetest.env:find_node_near(p_top, habitat_size, habitat_nodes) ~= nil and minetest.env:find_node_near(p_top, antitat_size, antitat_nodes) == nil  then
+              minetest.env:add_node(p_top, {name=node})
             end
           end
         end
       end
     end
+    print(count)
   end)
 end
 print("[Habitat] Loaded!")
